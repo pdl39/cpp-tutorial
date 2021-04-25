@@ -254,5 +254,46 @@ int main(int argc, char **argv) {
 
     printf("\n\n");
 
+    // Strings
+    cout << "---- STRINGS ----" << endl;
+    string str1;
+    cout << "Enter any word or phrase: " << endl;
+    getline(cin >> ws, str1);
+    cout << "Your String: " << str1 << endl;
+    cout << "First character of your string: " << str1[0] << endl;
+    cout << "Last character of your string: " << str1.back() << endl;
+    cout << "Length of your string: " << str1.length() << endl;
+    string str2 = str1;  // copy str1 to str2
+    cout << "str2: " << str2 << endl;
+    string str3(str2, 1);  // new string starting from index 4 of str2 assigned to str3
+    cout << "str3: " << str3 << endl;
+    string str4 = str1 + " + this string added!";  // append method 1
+    cout << "str4: " << str4 << endl;
+    string str5 = str4.append(" + this string appended!");  // append method 2
+    cout << "str5: " << str5 << endl;
+    string str6 = str5.erase(7, 3);  // erase -> delete {argument 2} number of characters beginning from index {arguments 1}, inclusive
+    cout << "str6: " << str6 << endl;
+
+    // find
+    string stringToFind = "!";
+    if (str6.find(stringToFind) != string::npos) {  // npos (n position) -> end of string
+        cout << "\"" << stringToFind << "\""
+             << ": Found at index: " << str6.find("!") << endl;
+    }
+
+    // substring
+    cout << "Substring: " << str6.substr(6, 8) << endl;
+    string sNum = to_string(1 + 2);
+    cout << "This is a stringified number: " << sNum << endl;
+
+    // character functions to check char type
+    char letterZ = 'z';
+    char num5 = '5';
+    char whiteSpace = ' ';
+    cout << "Is z a letter or a number? " << isalnum(letterZ) << endl;
+    cout << "Is z a letter? " << isalpha(letterZ) << endl;
+    cout << "Is 5 a number? " << isdigit(num5) << endl;
+    cout << "Is whiteSpace a space? " << isspace(whiteSpace) << endl;
+
     return 0;
 }
