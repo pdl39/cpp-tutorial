@@ -1,7 +1,7 @@
-#include <cmath>
-#include <cstdlib>
-#include <ctime>
 #include <iostream>
+#include <cstdlib>
+#include <cmath>
+#include <ctime>
 #include <limits>
 #include <numeric>
 #include <sstream>
@@ -27,8 +27,8 @@ void assignName();
 void changeScore(int* pScore);
 void doubleArr(int* arr, int size);
 double divideNums(double num1, double num2);
-
 void showArea(Shape& shape);
+vector<int> GenerateVecValues(int num);
 
 // ENTRY POINT //
 int main(int argc, char** argv) {
@@ -456,6 +456,31 @@ int main(int argc, char** argv) {
     cout << "numoo1 + numoo2 = " << numoo1 + numoo2 << endl;
     cout << "numoo1 == numoo2 = " << (numoo1 == numoo2) << endl;
 
+    // Lambda Expressions
+    cout << "---- LAMBDA EXPRESSIONS ----" << endl;
+    vector<int> vecValues = GenerateVecValues(10);
+
+    cout << "sort: values" << endl;
+    sort(vecValues.begin(), vecValues.end(), [](int x, int y) { return x < y; });
+    for (auto val : vecValues) cout << val << " ";
+
+    printf("\n\n");
+
+    vector<int> evenVecValues;
+
+    cout << "copy_if: even values" << endl;
+    copy_if(vecValues.begin(), vecValues.end(), back_inserter(evenVecValues), [](int x) { return x % 2 == 0; });
+    for (auto val : evenVecValues) cout << val << " ";
+
+    printf("\n\n");
+
+    cout << "for_each: sum values" << endl;
+    int vecSum = 0;
+    for_each(vecValues.begin(), vecValues.end(), [&](int x) { vecSum += x; });
+    cout << "Sum: " << vecSum << endl;
+
+    printf("\n\n");
+
     return 0;
 }
 
@@ -484,4 +509,18 @@ double divideNums(double num1, double num2) {
 
 void showArea(Shape& shape) {
     cout << "Area: " << shape.Area() << endl;
+}
+
+vector<int> GenerateVecValues(int num) {
+    vector<int> vectorValues;
+    srand(time(NULL));
+    int i = 0;
+    int randValue = 0;
+
+    while (i < num) {
+        randValue = rand() % 100;
+        vectorValues.push_back(randValue);
+        i++;
+    }
+    return vectorValues;
 }
