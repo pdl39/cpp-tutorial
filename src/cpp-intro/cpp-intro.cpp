@@ -13,6 +13,7 @@
 #include "../cpp-abstract-classes/Circle2.h"
 #include "../cpp-structs/ShapeStruct.h"
 #include "../cpp-structs/CircleStruct.h"
+#include "../cpp-operator-overloading/Numbers.h"
 
 using namespace std;
 
@@ -442,6 +443,18 @@ int main(int argc, char** argv) {
     cout << "Area of rectangleStruct: " << rectangleStruct.Area() << endl;
     cout << "Area of circleStruct: " << circleStruct.Area() << endl;
 
+    printf("\n\n");
+
+    // Operator Overloading
+    cout << "---- OPERATOR OVERLOADING ----" << endl;
+    Numbers numoo1(10, 10, 10);
+    ++numoo1;
+    cout << "numoo1: " << numoo1 << endl;
+
+    Numbers numoo2(7, 7, 7);
+    cout << "numoo2: " << numoo2 << endl;
+    cout << "numoo1 + numoo2 = " << numoo1 + numoo2 << endl;
+    cout << "numoo1 == numoo2 = " << (numoo1 == numoo2) << endl;
 
     return 0;
 }
