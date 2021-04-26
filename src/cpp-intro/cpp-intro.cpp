@@ -8,6 +8,9 @@
 #include <string>
 #include <vector>
 
+#include "../cpp-classes/Shape.h"
+#include "../cpp-classes/Circle.h"
+
 using namespace std;
 
 // Global Variables
@@ -21,6 +24,8 @@ void changeScore(int* pScore);
 void doubleArr(int* arr, int size);
 double divideNums(double num1, double num2);
 
+void showArea(Shape& shape);
+
 int main(int argc, char** argv) {
     // basic stdout (print)
     cout << "***** INTRO TO C++ *****" << endl;
@@ -28,7 +33,8 @@ int main(int argc, char** argv) {
     cout << "Please enter your name: " << endl;
     cin >> name;
     cout << "Hello, " << name << "! Let's start our C++ tutorial!" << endl;
-    // cout << "Hello World" << endl;
+
+    cout << "Press enter to go to the next topic";
 
     printf("\n\n");
 
@@ -93,8 +99,6 @@ int main(int argc, char** argv) {
     double d2 = 1.1111111111111111;
     printf("Sum of %f and %f = %.16f\n", d1, d2, (d1 + d2));
 
-    printf("\n");
-
     // auto: Data Type Assigned During Compilation:
     auto whatDataType1 = 10;
     auto whatDataType2 = true;
@@ -111,7 +115,7 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     // saving user input to variable
-    cout << "---- CIN: SAVING USER INPUT TO A VARIABLE ----" << endl;
+    cout << "---- cin: SAVING USER INPUT TO A VARIABLE ----" << endl;
     string prompt1 = "Enter a number: ";
     string num1, num2;
     cout << prompt1 << endl;
@@ -405,6 +409,17 @@ int main(int argc, char** argv) {
         cout << EXP << endl;
     }
 
+    printf("\n\n");
+
+    // Object & Classes
+    cout << "---- Classes ----" << endl;
+    Shape square(10, 5);
+    Circle circle(10);
+    cout << "Area of square: " << square.Area() << endl;
+    cout << "Area of cirle: " << circle.Area() << endl;
+    showArea(square);
+    showArea(circle);
+
     return 0;
 }
 
@@ -417,7 +432,6 @@ void assignName() {
     string name = "Bob";
 }
 
-// Pointers
 void changeScore(int* pScore) {  // * -> the '*' appended to the variable type (int) means "the variable is a pointer to the address that contains its value, which is an int".
     *pScore = 100;
 }
@@ -430,4 +444,8 @@ void doubleArr(int* arr, int size) {
 
 double divideNums(double num1, double num2) {
     return num1 / num2;
+}
+
+void showArea(Shape& shape) {
+    cout << "Area: " << shape.Area() << endl;
 }
