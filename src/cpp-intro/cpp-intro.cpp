@@ -11,6 +11,8 @@
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
 #include "../cpp-abstract-classes/Circle2.h"
+#include "../cpp-structs/ShapeStruct.h"
+#include "../cpp-structs/CircleStruct.h"
 
 using namespace std;
 
@@ -27,6 +29,7 @@ double divideNums(double num1, double num2);
 
 void showArea(Shape& shape);
 
+// ENTRY POINT //
 int main(int argc, char** argv) {
     // basic stdout (print)
     cout << "***** INTRO TO C++ *****" << endl;
@@ -427,6 +430,18 @@ int main(int argc, char** argv) {
     cout << "---- Abstract Classes ----" << endl;
     Circle2 circle2(15);
     cout << "Area of circle2: " << circle2.Area() << endl;
+
+    printf("\n\n");
+
+    // Structs
+    cout << "---- STRUCTS ----" << endl;
+    Shape squareStruct(11, 11);
+    Shape rectangleStruct(3, 10);
+    CircleStruct circleStruct(12);
+    cout << "Area of squareStruct: " << squareStruct.Area() << endl;
+    cout << "Area of rectangleStruct: " << rectangleStruct.Area() << endl;
+    cout << "Area of circleStruct: " << circleStruct.Area() << endl;
+
 
     return 0;
 }
