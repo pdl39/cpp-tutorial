@@ -10,6 +10,7 @@
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
+#include "../cpp-abstract-classes/Circle2.h"
 
 using namespace std;
 
@@ -411,7 +412,7 @@ int main(int argc, char** argv) {
 
     printf("\n\n");
 
-    // Object & Classes
+    // Classes
     cout << "---- Classes ----" << endl;
     Shape square(10, 5);
     Circle circle(10);
@@ -419,6 +420,13 @@ int main(int argc, char** argv) {
     cout << "Area of cirle: " << circle.Area() << endl;
     showArea(square);
     showArea(circle);
+
+    printf("\n\n");
+
+    // Abstract Classes
+    cout << "---- Abstract Classes ----" << endl;
+    Circle2 circle2(15);
+    cout << "Area of circle2: " << circle2.Area() << endl;
 
     return 0;
 }

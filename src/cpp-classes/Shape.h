@@ -1,4 +1,4 @@
-#pragma once // makes sure the Shape.h file is copied only once for the entire build.
+#pragma once  // makes sure the Shape.h file is copied only once for the entire build.
 // basically the same function as #ifndef #define #endif sequence, but more new and preferred.
 
 class Shape {
@@ -10,8 +10,8 @@ class Shape {
 
    public:                   // accessible by anything that can access this class
     static int numOfShapes;  // static -> will be the same value for all instances of this class
-    // Constructors: called everytime an object instance is created.
 
+    // Constructors: called everytime an object instance is created.
     Shape();
     Shape(double length) {
         this->height = length;  // -> : pointer operator. Used access an object's fields and methods
@@ -44,7 +44,8 @@ class Shape {
         return numOfShapes;
     }
 
-    virtual double Area() {  // virtual -> will be unique to each object instance (vs. static)
+    // Polymorphism: different methods can be executed for each inherited object
+    virtual double Area() {  // virtual -> will be unique to each inherited object (vs. static)
         return height * width;
     }
 };
