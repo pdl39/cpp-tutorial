@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <fstream>
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
@@ -456,6 +457,8 @@ int main(int argc, char** argv) {
     cout << "numoo1 + numoo2 = " << numoo1 + numoo2 << endl;
     cout << "numoo1 == numoo2 = " << (numoo1 == numoo2) << endl;
 
+    printf("\n\n");
+
     // Lambda Expressions
     cout << "---- LAMBDA EXPRESSIONS ----" << endl;
     vector<int> vecValues = GenerateVecValues(10);
@@ -480,6 +483,44 @@ int main(int argc, char** argv) {
     cout << "Sum: " << vecSum << endl;
 
     printf("\n\n");
+
+    // File I/O
+    cout << "---- FILE I/O ----" << endl;
+    ofstream writeToFileObj;
+    ifstream readFromFileObj;
+    string strToWrite = "";
+    string strToRead = "";
+
+    // ios_base options for ofstream open member function:
+    // out -> write to file
+    // app -> append to file
+    // ate -> move to the end of file
+    // trunc -> if file already exists, delete the contents so that new contents can be written
+    // in -> read from file
+    // and many more...
+
+    writeToFileObj.open("example.txt", ios_base::out | ios_base::trunc);
+    if (writeToFileObj.is_open()) {
+        writeToFileObj << "--- Beginning of File ---\n";
+        cout << "Enter data to write: ";
+        getline(cin, strToWrite);
+        writeToFileObj << strToWrite;
+        writeToFileObj.close();
+    }
+
+    printf("\n");
+
+    readFromFileObj.open("example.txt", ios_base::in);
+
+    cout << "File Contents: " << endl;
+
+    if (readFromFileObj.is_open()) {
+        while (readFromFileObj.good()) {
+            getline(readFromFileObj, strToRead);
+            cout << strToRead << endl;
+        }
+        readFromFileObj.close();
+    }
 
     return 0;
 }
