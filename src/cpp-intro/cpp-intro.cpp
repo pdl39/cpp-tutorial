@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <deque>
+#include <iterator>
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
@@ -586,6 +588,77 @@ int main(int argc, char** argv) {
     Student<int, double> bob(181, 75.5);
     bob.GetData();
     cout << "Student Number: " << bob.studentNum << endl;
+
+    printf("\n\n");
+
+    // Deque (Double-Ended Queues)
+    cout << "---- DEQUE ----" << endl;
+    deque<int> numsDeq = {1, 3, 5, 7, 9};
+    for (int x : numsDeq) cout << x << " ";
+
+    printf("\n");
+
+    cout << "numsDeq.push_front(0): " << endl;
+    numsDeq.push_front(0);
+    for (int x : numsDeq) cout << x << " ";
+
+    printf("\n");
+
+    cout << "numsDeq.push_back(11): " << endl;
+    numsDeq.push_back(11);
+    for (int x : numsDeq) cout << x << " ";
+
+    printf("\n");
+
+    cout << "numsDeq.size() = " << numsDeq.size() << endl;
+
+    numsDeq.assign({2, 4, 6});  // assign replaces the existing deque with the provided input.
+    cout << "numsDeq.assign({2, 4, 6}): " << endl;
+    for (int x : numsDeq) cout << x << " ";
+
+    printf("\n");
+
+    cout << "numsDeq.size() = " << numsDeq.size() << endl;
+
+    printf("\n\n");
+
+    // Iterators
+    cout << "---- ITERATORS ----" << endl;
+    vector<int> numsVec = {1, 3, 5, 7, 9};
+    vector<int>::iterator itr;
+    cout << "numsVec = ";
+    for (itr = numsVec.begin(); itr < numsVec.end(); itr++) {
+        cout << *itr << " ";
+    }
+
+    printf("\n");
+
+    vector<int>::iterator itr2 = numsVec.begin();
+    cout << "itr2 = numsVec.begin()" << endl;
+    advance(itr2, 2);
+    cout << "*itr2 = advance(itr2, 2) = " << *itr2 << endl;
+    auto itr3 = next(itr2, 1);
+    auto itr4 = prev(itr2, 1);
+    cout << "*itr3 = next(itr2, 1) = " << *itr3 << endl;
+    cout << "*itr4 = prev(itr2, 1) = " << *itr4 << endl;
+
+    vector<int> numsVec2 = {1, 7, 9, 11};
+    vector<int> numsVec3 = {3, 5};
+    cout << "numsVec2 = ";
+    for (int& x : numsVec2) cout << x << " ";
+    printf("\n");
+    cout << "numsVec3 = ";
+    for (int& x : numsVec3) cout << x << " ";
+    printf("\n");
+    auto itr5 = numsVec2.begin();
+    advance(itr5, 1);
+    copy(numsVec3.begin(), numsVec3.end(), inserter(numsVec2, itr5));
+    cout << "numsVec2 = ";
+    for (int& x : numsVec2) cout << x << " ";
+
+    printf("\n");
+
+    printf("\n\n");
 
     return 0;
 }
