@@ -1,3 +1,4 @@
+// Pre-Processor Directives
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
@@ -18,18 +19,26 @@
 
 using namespace std;
 
+// Macros
+// There are 2 types of macros - macro constants & macro functions
+#define PI 3.14                                  // macro constant
+#define CIRCUMFERENCE(radius) (2 * PI * radius)  // macro function
+
 // Global Variables
 int globalVar = 0;
-const double PI = 3.14;  // constant variable (convention is to use capital letters for variable name)
+const double BASEUNIT = 1.00;  // constant variable (convention is to use capital letters for variable name)
 
 // Function Prototypes
-double addNums(double num1, double num2);
-void assignName();
-void changeScore(int* pScore);
-void doubleArr(int* arr, int size);
-double divideNums(double num1, double num2);
-void showArea(Shape& shape);
+double AddNums(double num1, double num2);
+void AssignName();
+void ChangeScore(int* pScore);
+void DoubleArr(int* arr, int size);
+double DivideNums(double num1, double num2);
+void ShowArea(Shape& shape);
 vector<int> GenerateVecValues(int num);
+double NumTimes2(double num);
+double NumTimes2v2(function<double(double)> func, double num);
+double NumTimes5(double num);
 
 // ENTRY POINT //
 int main(int argc, char** argv) {
@@ -355,9 +364,9 @@ int main(int argc, char** argv) {
     cout << "---- FUNCTIONS ----" << endl;
     double numd1 = 10.5;
     double numd2 = 11.77;
-    printf("%f + %f = %f\n", numd1, numd2, addNums(numd1, numd2));
+    printf("%f + %f = %f\n", numd1, numd2, AddNums(numd1, numd2));
 
-    assignName();  // doesn't do anything (assignName is of type void)
+    AssignName();  // doesn't do anything (assignName is of type void)
 
     printf("\n\n");
 
@@ -365,7 +374,7 @@ int main(int argc, char** argv) {
     cout << "---- POINTERS ----" << endl;
     int score = 95;
     cout << "Score Before: " << score << endl;
-    changeScore(&score); /* & (reference operator) -> the '&' preprended to the variable means "get the address of the variable".
+    ChangeScore(&score); /* & (reference operator) -> the '&' preprended to the variable means "get the address of the variable".
     By using a pointer as an argument to the function, we are able to change the value of the variable
     through the void function and use it outside the function by directly accessing the address. */
     cout << "Score After: " << score << endl;
@@ -391,7 +400,7 @@ int main(int argc, char** argv) {
     }
     printf("\n");
 
-    doubleArr(intArr, arrLen);
+    DoubleArr(intArr, arrLen);
 
     printf("intArr after doubleArr() call: \n");
     for (int i = 0; i < arrLen; i++) {
@@ -409,7 +418,7 @@ int main(int argc, char** argv) {
         if (numd4 == 0)
             throw "ERROR: Division by Zero.";
         else {
-            printf("%f / %f = %f\n", numd3, numd4, divideNums(numd3, numd4));
+            printf("%f / %f = %f\n", numd3, numd4, DivideNums(numd3, numd4));
         }
     } catch (const char* EXP) {
         cout << EXP << endl;
@@ -423,8 +432,8 @@ int main(int argc, char** argv) {
     Circle circle(10);
     cout << "Area of square: " << square.Area() << endl;
     cout << "Area of cirle: " << circle.Area() << endl;
-    showArea(square);
-    showArea(circle);
+    ShowArea(square);
+    ShowArea(circle);
 
     printf("\n\n");
 
@@ -522,33 +531,58 @@ int main(int argc, char** argv) {
         readFromFileObj.close();
     }
 
+    printf("\n\n");
+
+    // Functions as Objects
+    // Refer to function definitions below for how functions are structured.
+    cout << "---- FUNCTIONS AS OBJECTS ----" << endl;
+    auto NumTimes2o = NumTimes2;
+    cout << "10 * 2 = " << NumTimes2o(10) << endl;
+
+    auto NumTimes2v2o = NumTimes2v2;
+    cout << "100 * 2 = " << NumTimes2v2o(NumTimes2o, 100) << endl;
+
+    vector<function<double(double)>> vecFuncs(2);
+    vecFuncs[0] = NumTimes2;
+    vecFuncs[1] = NumTimes5;
+    cout << "11 * 2 = " << vecFuncs[0](11) << endl;
+    cout << "20 * 5 = " << vecFuncs[1](20) << endl;
+
+    printf("\n\n");
+
+    // Macros
+    // Refer to pre-processor directives section above for defined macros.
+    cout << "---- MACROS ----" << endl;
+    cout << "Pi: " << PI << endl;
+    cout << "Circumference of a Circle of radius 7: " << CIRCUMFERENCE(7) << endl;
+
     return 0;
 }
 
 // Functions
-double addNums(double num1 = 0, double num2 = 0) {
+double AddNums(double num1 = 0, double num2 = 0) {
     return num1 + num2;
 }
 
-void assignName() {
+void AssignName() {
     string name = "Bob";
 }
 
-void changeScore(int* pScore) {  // * -> the '*' appended to the variable type (int) means "the variable is a pointer to the address that contains its value, which is an int".
+void ChangeScore(int* pScore) {  // * -> the '*' appended to the variable type (int) means "the variable is a pointer to the address that contains its value, which is an int".
     *pScore = 100;
 }
 
-void doubleArr(int* arr, int size) {
+void DoubleArr(int* arr, int size) {
     for (int i = 0; i < size; i++) {
         arr[i] = arr[i] * 2;
     }
 }
 
-double divideNums(double num1, double num2) {
+double DivideNums(double num1, double num2) {
     return num1 / num2;
 }
 
-void showArea(Shape& shape) {
+void ShowArea(Shape& shape) {
     cout << "Area: " << shape.Area() << endl;
 }
 
@@ -564,4 +598,16 @@ vector<int> GenerateVecValues(int num) {
         i++;
     }
     return vectorValues;
+}
+
+double NumTimes2(double num) {
+    return num * 2;
+}
+
+double NumTimes2v2(function<double(double)> func, double num) {
+    return func(num);
+}
+
+double NumTimes5(double num) {
+    return num * 5;
 }
