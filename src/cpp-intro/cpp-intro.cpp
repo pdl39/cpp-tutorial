@@ -16,6 +16,7 @@
 #include "../cpp-structs/ShapeStruct.h"
 #include "../cpp-structs/CircleStruct.h"
 #include "../cpp-operator-overloading/Numbers.h"
+#include "../cpp-template-classes/StudentTemplate.h"
 
 using namespace std;
 
@@ -39,6 +40,12 @@ vector<int> GenerateVecValues(int num);
 double NumTimes2(double num);
 double NumTimes2v2(function<double(double)> func, double num);
 double NumTimes5(double num);
+template <typename T>
+void Add2(T num);
+template <typename T>
+T AddTwoNums(T num1, T num2);
+template <typename T>
+T WhichIsBigger(T item1, T item2);
 
 // ENTRY POINT //
 int main(int argc, char** argv) {
@@ -556,6 +563,30 @@ int main(int argc, char** argv) {
     cout << "Pi: " << PI << endl;
     cout << "Circumference of a Circle of radius 7: " << CIRCUMFERENCE(7) << endl;
 
+    printf("\n\n");
+
+    // Template Functions
+    // template functions allow using the function with different data types.
+    // Refer to function definitions below for how template functions are structured.
+    cout << "---- TEMPLATE FUNCTIONS ----" << endl;
+    Add2(10);
+    Add2(10.1567);
+    cout << "AddTwoNums(10, 11) = " << AddTwoNums(10, 11) << endl;
+    cout << "AddTwoNums(10.1567, 11.4532) = " << AddTwoNums(10.1567, 11.4532) << endl;
+    cout << "WhichIsBigger(10, 100) = " << WhichIsBigger(10, 100) << endl;
+    cout << "WhichIsBigger(10.15, 10.18) = " << WhichIsBigger(10.15, 10.18) << endl;
+    cout << "WhichIsBigger('A', 'Z') = " << WhichIsBigger('A', 'Z') << endl;
+    cout << "WhichIsBigger(\"small\", \"large\") = " << WhichIsBigger("small", "large") << endl;
+
+    printf("\n\n");
+
+    // Template Classes
+    // template classes allow using the class with different data types.
+    cout << "____ TEMPLATE CLASSES ----" << endl;
+    Student<int, double> bob(181, 75.5);
+    bob.GetData();
+    cout << "Student Number: " << bob.studentNum << endl;
+
     return 0;
 }
 
@@ -600,6 +631,7 @@ vector<int> GenerateVecValues(int num) {
     return vectorValues;
 }
 
+// Functions as Objects
 double NumTimes2(double num) {
     return num * 2;
 }
@@ -610,4 +642,20 @@ double NumTimes2v2(function<double(double)> func, double num) {
 
 double NumTimes5(double num) {
     return num * 5;
+}
+
+// Template Functions
+template <typename T>
+void Add2(T num) {
+    cout << "Add2(" << num << ") = " << num + 2 << endl;
+}
+
+template <typename T>
+T AddTwoNums(T num1, T num2) {
+    return num1 + num2;
+}
+
+template <typename T>
+T WhichIsBigger(T item1, T item2) {
+    return item1 > item2 ? item1 : item2;
 }
