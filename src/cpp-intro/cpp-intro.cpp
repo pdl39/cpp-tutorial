@@ -11,6 +11,8 @@
 #include <fstream>
 #include <deque>
 #include <iterator>
+#include <memory>
+#include <stdio.h>
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
@@ -591,7 +593,7 @@ int main(int argc, char** argv) {
 
     printf("\n\n");
 
-    // Deque (Double-Ended Queues)
+    // deque (Double-Ended Queues)
     cout << "---- DEQUE ----" << endl;
     deque<int> numsDeq = {1, 3, 5, 7, 9};
     for (int x : numsDeq) cout << x << " ";
@@ -656,6 +658,54 @@ int main(int argc, char** argv) {
     cout << "numsVec2 = ";
     for (int& x : numsVec2) cout << x << " ";
 
+    printf("\n");
+
+    printf("\n\n");
+
+    // Memory Management
+    // malloc
+    cout << "---- MALLOC ----" << endl;
+    int numValuesToStore;
+    cout << "Enter how many values you want to store: ";
+    cin >> numValuesToStore;
+    int* pNewValues;
+    pNewValues = (int*)malloc(numValuesToStore * sizeof(int));  // malloc initializtion
+    if (pNewValues != NULL) {
+        int i = 0;
+        while (i < numValuesToStore) {
+            cout << "Enter a number to store: ";
+            cin >> pNewValues[i];
+            i++;
+        }
+    }
+
+    cout << "You stored the following numbers through malloc: " << endl;
+    for (int i = 0; i < numValuesToStore; i++) {
+        cout << pNewValues[i] << " ";
+    }
+    printf("\n");
+
+    printf("\n\n");
+
+    // Smart Pointers
+    cout << "---- SMART POINTERS ----" << endl;
+    int numValuesToStore2;
+    cout << "Enter how many values you want to store: ";
+    cin >> numValuesToStore2;
+    unique_ptr<int[]> pNewValues2(new int[numValuesToStore2]);  // smart pointer initialization
+    if (pNewValues2 != NULL) {
+        int i = 0;
+        while (i < numValuesToStore2) {
+            cout << "Enter a number to store: ";
+            cin >> pNewValues2[i];
+            i++;
+        }
+    }
+
+    cout << "You stored the following numbers through smart pointer: " << endl;
+    for (int i = 0; i < numValuesToStore2; i++) {
+        cout << pNewValues2[i] << " ";
+    }
     printf("\n");
 
     printf("\n\n");
