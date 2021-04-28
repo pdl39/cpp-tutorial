@@ -13,6 +13,9 @@
 #include <iterator>
 #include <memory>
 #include <stdio.h>
+#include <thread>
+#include <chrono>
+#include <mutex>
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
@@ -50,6 +53,8 @@ template <typename T>
 T AddTwoNums(T num1, T num2);
 template <typename T>
 T WhichIsBigger(T item1, T item2);
+int GetRandValue(int upperbound);
+void ExecuteThread(int id);
 
 // ENTRY POINT //
 int main(int argc, char** argv) {
@@ -594,6 +599,7 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     // deque (Double-Ended Queues)
+    // #include <deque>
     cout << "---- DEQUE ----" << endl;
     deque<int> numsDeq = {1, 3, 5, 7, 9};
     for (int x : numsDeq) cout << x << " ";
@@ -625,6 +631,7 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     // Iterators
+    // include <iterator>
     cout << "---- ITERATORS ----" << endl;
     vector<int> numsVec = {1, 3, 5, 7, 9};
     vector<int>::iterator itr;
@@ -662,7 +669,7 @@ int main(int argc, char** argv) {
 
     printf("\n\n");
 
-    // Memory Management
+    // Memory Management - #include <memory>, <stdio.h>
     // malloc
     cout << "---- MALLOC ----" << endl;
     int numValuesToStore;
@@ -709,6 +716,20 @@ int main(int argc, char** argv) {
     printf("\n");
 
     printf("\n\n");
+
+    // Threads
+    // #include <thread>, <chrono>, <mutex>
+    cout << "---- THREADS ----" << endl;
+    thread thr1(ExecuteThread, 1);
+    thr1.join();  // join the thr1 thread to our main thread
+
+    thread thr2(ExecuteThread, 2);
+    thr2.join();
+
+    printf("\n\n");
+
+    // Time Functions
+    //
 
     return 0;
 }
@@ -766,6 +787,7 @@ double NumTimes2v2(function<double(double)> func, double num) {
 double NumTimes5(double num) {
     return num * 5;
 }
+//
 
 // Template Functions
 template <typename T>
@@ -782,3 +804,34 @@ template <typename T>
 T WhichIsBigger(T item1, T item2) {
     return item1 > item2 ? item1 : item2;
 }
+//
+
+// Threads
+int GetRandValue(int upperbound) {
+    srand(time(NULL));
+    return rand() % upperbound;
+}
+
+void ExecuteThread(int id) {
+    auto currentTime = chrono::system_clock::now();
+    time_t sleepTime = chrono::system_clock::to_time_t(currentTime);
+    tm myLocalTime = *localtime(&sleepTime);
+    cout << "Thread: " << id << endl;
+    cout << "Sleep Time: " << ctime(&sleepTime) << endl;
+    cout << "Year: " << myLocalTime.tm_year + 1900 << endl;
+    cout << "Month: " << myLocalTime.tm_mon + 1 << endl;
+    cout << "Day: " << myLocalTime.tm_mday << endl;
+    cout << "Hours: " << myLocalTime.tm_hour << endl;
+    cout << "Minutes: " << myLocalTime.tm_min << endl;
+    cout << "Seconds: " << myLocalTime.tm_sec << endl;
+
+    printf("\n");
+
+    // put thread to sleep (for up to 3 seconds)
+    this_thread::sleep_for(chrono::seconds(GetRandValue(3)));
+    currentTime = chrono::system_clock::now();
+    time_t awakeTime = chrono::system_clock::to_time_t(currentTime);
+    cout << "Thread: " << id << endl;
+    cout << "Awake Time: " << ctime(&awakeTime) << endl;
+}
+//
