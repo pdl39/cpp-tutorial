@@ -1,21 +1,24 @@
 // Pre-Processor Directives
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cstdlib>
 #include <cmath>
 #include <ctime>
 #include <limits>
 #include <numeric>
-#include <sstream>
 #include <string>
 #include <vector>
-#include <fstream>
-#include <deque>
 #include <iterator>
 #include <memory>
 #include <stdio.h>
 #include <thread>
-#include <chrono>
 #include <mutex>
+#include <chrono>
+#include <deque>
+#include <list>
+#include <forward_list>
+#include <set>
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
@@ -55,6 +58,16 @@ template <typename T>
 T WhichIsBigger(T item1, T item2);
 int GetRandValue(int upperbound);
 void ExecuteThread(int id);
+template <typename T>
+void ShowArrItems(T* iterable);
+template <typename T>
+void ShowDequeItems(deque<T> iterable);
+template <typename T>
+void ShowListItems(list<T> iterable);
+template <typename T>
+void ShowFwListItems(forward_list<T> iterable);
+template <typename T>
+void ShowSetItems(set<T> iterable);
 
 // ENTRY POINT //
 int main(int argc, char** argv) {
@@ -598,38 +611,6 @@ int main(int argc, char** argv) {
 
     printf("\n\n");
 
-    // deque (Double-Ended Queues)
-    // #include <deque>
-    cout << "---- DEQUE ----" << endl;
-    deque<int> numsDeq = {1, 3, 5, 7, 9};
-    for (int x : numsDeq) cout << x << " ";
-
-    printf("\n");
-
-    cout << "numsDeq.push_front(0): " << endl;
-    numsDeq.push_front(0);
-    for (int x : numsDeq) cout << x << " ";
-
-    printf("\n");
-
-    cout << "numsDeq.push_back(11): " << endl;
-    numsDeq.push_back(11);
-    for (int x : numsDeq) cout << x << " ";
-
-    printf("\n");
-
-    cout << "numsDeq.size() = " << numsDeq.size() << endl;
-
-    numsDeq.assign({2, 4, 6});  // assign replaces the existing deque with the provided input.
-    cout << "numsDeq.assign({2, 4, 6}): " << endl;
-    for (int x : numsDeq) cout << x << " ";
-
-    printf("\n");
-
-    cout << "numsDeq.size() = " << numsDeq.size() << endl;
-
-    printf("\n\n");
-
     // Iterators
     // include <iterator>
     cout << "---- ITERATORS ----" << endl;
@@ -670,6 +651,7 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     // Memory Management - #include <memory>, <stdio.h>
+    // malloc & smart pointers
     // malloc
     cout << "---- MALLOC ----" << endl;
     int numValuesToStore;
@@ -728,8 +710,361 @@ int main(int argc, char** argv) {
 
     printf("\n\n");
 
-    // Time Functions
-    //
+    // Sequence Containers - #include <deque>, <list>, <forward_list>
+    // deque, list, forward_list
+    // deque -> Double-Ended Queues
+    cout << "---- DEQUE ----" << endl;
+    deque<int> numsDeq = {1, 3, 5, 7, 9};
+    cout << "numsDeq: " << endl;
+    ShowDequeItems(numsDeq);
+
+    cout << "numsDeq.push_front(0): " << endl;
+    numsDeq.push_front(0);
+    ShowDequeItems(numsDeq);
+
+    cout << "numsDeq.push_back(11): " << endl;
+    numsDeq.push_back(11);
+    ShowDequeItems(numsDeq);
+
+    cout << "numsDeq.size() = " << numsDeq.size() << endl;
+
+    numsDeq.assign({2, 4, 6});  // assign replaces the existing deque with the provided input.
+    cout << "numsDeq.assign({2, 4, 6}): " << endl;
+    ShowDequeItems(numsDeq);
+
+    cout << "numsDeq.size() = " << numsDeq.size() << endl;
+
+    cout << "numsDeq[0] = " << numsDeq[0] << endl;
+    cout << "numsDeq.at(1) = " << numsDeq.at(1) << endl;
+
+    deque<int>::iterator deqItr = numsDeq.begin() + 1;
+    cout << "deqItr = numsDeq.begin() + 1" << endl;
+    numsDeq.insert(deqItr, 3);
+    cout << "numsDeq.insert(deqItr, 3): " << endl;
+    ShowDequeItems(numsDeq);
+
+    int tempArr1[3] = {7, 8, 9};
+    cout << "tempArr1: " << endl;
+    ShowArrItems(tempArr1);
+
+    numsDeq.insert(numsDeq.end(), tempArr1, tempArr1 + 2);
+    cout << "numsDeq.insert(numsDeq.end(), tempArr1, tempArr1 + 2): " << endl;
+    ShowDequeItems(numsDeq);
+
+    numsDeq.erase(numsDeq.end());
+    cout << "numsDeq.erase(numsDeq.end()): " << endl;
+    ShowDequeItems(numsDeq);
+
+    numsDeq.pop_front();
+    cout << "numsDeq.pop_front(): " << endl;
+    ShowDequeItems(numsDeq);
+
+    numsDeq.pop_back();
+    cout << "numsDeq.pop_back(): " << endl;
+    ShowDequeItems(numsDeq);
+
+    deque<int> numsDeq2 = {11, 13, 15};
+    cout << "numsDeq = ";
+    ShowDequeItems(numsDeq);
+    cout << "numsDeq2 = ";
+    ShowDequeItems(numsDeq2);
+
+    numsDeq.swap(numsDeq2);
+    cout << "numsDeq.swap(numsDeq2): " << endl;
+    cout << "numsDeq = ";
+    ShowDequeItems(numsDeq);
+    cout << "numsDeq2 = ";
+    ShowDequeItems(numsDeq2);
+
+    printf("\n\n");
+
+    // list
+    // this is like a doubly-linked list
+    // fast random access not supported.
+    cout << "---- LIST ----" << endl;
+    int numArr5[5] = {1, 2, 3, 4, 5};
+    cout << "numArr5: ";
+    ShowArrItems(numArr5);
+    list<int> list1;
+    list1.insert(list1.begin(), numArr5, numArr5 + 5);
+    cout << "list1.insert(list1.begin(), numArr5, numArr5 + 5): " << endl;
+    ShowListItems(list1);
+
+    list1.assign({11, 12, 13});
+    cout << "list1.assign({11, 12, 13}): " << endl;
+    ShowListItems(list1);
+
+    list1.push_front(10);
+    cout << "list1.push_front(10): " << endl;
+    ShowListItems(list1);
+
+    list1.push_back(18);
+    cout << "list1.push_back(16): " << endl;
+    ShowListItems(list1);
+
+    // for list, you can't access item by index: e.g. list1[0] -> results in error.
+    // but you can access item through iterator.
+
+    list<int>::iterator listItr1 = list1.begin();
+    advance(listItr1, 2);
+    cout << "listItr1 = list1.begin()" << endl;
+    cout << "advance(listItr1, 2)" << endl;
+    cout << "*listItr1 = " << *listItr1 << endl;
+
+    list<int>::iterator listItr2 = list1.begin();
+    advance(listItr2, 4);
+    cout << "listItr2 = list2.begin()" << endl;
+    cout << "advance(listItr2, 3)" << endl;
+    cout << "*listItr2 = " << *listItr2 << endl;
+    list1.insert(listItr2, {14, 15, 16, 17});
+    cout << "list1.insert(listIr2, {14, 15, 16, 17}): " << endl;
+    ShowListItems(list1);
+
+    list1.erase(list1.begin());
+    cout << "list1.erase(list1.begin()): " << endl;
+    ShowListItems(list1);
+
+    list<int>::iterator listItr3 = list1.begin();
+    advance(listItr3, 3);
+    cout << "listItr3 = list1.begin()" << endl;
+    cout << "advance(listItr3, 3)" << endl;
+    cout << "*listItr3 = " << *listItr3 << endl;
+    cout << "*listItr2 = " << *listItr2 << endl;
+    cout << "*listItr1 = " << *listItr1 << endl;
+
+    list1.erase(listItr1);
+    cout << "list1.erase(listItr1): " << endl;
+    ShowListItems(list1);
+    list1.erase(listItr3);
+    cout << "list1.erase(listItr3): " << endl;
+    ShowListItems(list1);
+
+    listItr1 = list1.begin();
+    advance(listItr1, 2);
+    cout << "listItr1 = list1.begin()" << endl;
+    cout << "advance(listItr1, 2)" << endl;
+    cout << "*listItr1 = " << *listItr1 << endl;
+    cout << "*listItr2 = " << *listItr2 << endl;
+    list1.erase(listItr1, listItr2);
+    cout << "list1.erase(listItr1, listItr2): " << endl;
+    ShowListItems(list1);
+
+    list1.pop_front();
+    cout << "list1.pop_front(): " << endl;
+    ShowListItems(list1);
+
+    list1.pop_back();
+    cout << "list1.pop_back(): " << endl;
+    ShowListItems(list1);
+
+    list<int> list2 = {11, 13, 15};
+    cout << "list = ";
+    ShowListItems(list1);
+    cout << "list2 = ";
+    ShowListItems(list2);
+
+    list1.swap(list2);
+    cout << "list1.swap(list2): " << endl;
+    cout << "list1 = ";
+    ShowListItems(list1);
+    cout << "list2 = ";
+    ShowListItems(list2);
+
+    list1.push_front(18);
+    cout << "list1.push_front(18): " << endl;
+    ShowListItems(list1);
+
+    list1.reverse();  // reverse isn't sorting in reverse (decreasing) order. it is reversing the order the elements appear in the list.
+    cout << "list1.reverse(): " << endl;
+    ShowListItems(list1);
+
+    list1.push_front(11);
+    cout << "list1.push_front(11): " << endl;
+    ShowListItems(list1);
+
+    list1.push_back(15);
+    cout << "list1.push_back(15): " << endl;
+    ShowListItems(list1);
+
+    list2.push_back(18);
+    cout << "list2.push_back(18): " << endl;
+    ShowListItems(list2);
+
+    list2.push_front(18);
+    cout << "list2.push_front(18): " << endl;
+    ShowListItems(list2);
+
+    list1.sort();
+    cout << "list1.sort(): " << endl;
+    ShowListItems(list1);
+
+    list2.sort();
+    cout << "list2.sort(): " << endl;
+    ShowListItems(list2);
+
+    list1.merge(list2);  // result is sorted if the two lists are sorted.
+    cout << "list1.merge(list2): " << endl;
+    ShowListItems(list1);
+
+    list1.unique();  // remove duplicates **only works 100% for sorted list -> it removes an element only if it compares equal to the elment immediately preceding it.
+    cout << "list1.unique(): " << endl;
+    ShowListItems(list1);
+
+    printf("\n\n");
+
+    // forward_list
+    // this is like a singly-linked list
+    // fast random access not supported.
+    cout << "---- FORWARD_LIST ----" << endl;
+    forward_list<int> fwList1;
+
+    fwList1.assign({1, 2, 3, 4, 5});
+    cout << "fwList1.assign({1, 2, 3, 4, 5}): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.push_front(0);
+    cout << "fwList1.push_front(0): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.pop_front();
+    cout << "fwList1.pop_front(): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.emplace_front(0);
+    cout << "fwList1.emplace_front(0): " << endl;
+    ShowFwListItems(fwList1);
+
+    cout << "fwList1.front() = " << fwList1.front() << endl;
+
+    forward_list<int>::iterator fwListItr1 = fwList1.begin();
+    advance(fwListItr1, 4);
+    cout << "fwListItr1 = fwList1.begin()" << endl;
+    cout << "advance(fwListItr1, 4)" << endl;
+    cout << "*fwListItr1 = " << *fwListItr1 << endl;
+
+    fwList1.insert_after(fwListItr1, {7, 8, 9});
+    cout << "fwList1.insert_after(fwListItr1, {7, 8, 9}): " << endl;
+    ShowFwListItems(fwList1);
+
+    cout << "*fwListItr1 = " << *fwListItr1 << endl;
+    fwListItr1++;
+    cout << "fwListItr1++" << endl;
+    cout << "*fwListItr1 = " << *fwListItr1 << endl;
+
+    forward_list<int>::iterator fwListItr2 = fwList1.begin();
+    fwList1.emplace_after(fwListItr2, 1);
+    cout << "fwListItr2 = fwList1.begin()" << endl;
+    cout << "*fwListItr2 = " << *fwListItr2 << endl;
+    cout << "fwList1.emplace_after(fwListItr2, 1): " << endl;
+    ShowFwListItems(fwList1);
+
+    advance(fwListItr2, 5);
+    cout << "advance(fwListItr2, 5)" << endl;
+    cout << "*fwListItr2 = " << *fwListItr2 << endl;
+
+    fwList1.emplace_after(fwListItr2, 22);
+    cout << "fwList1.emplace_after(fwListItr2, 22): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.erase_after(fwListItr2);
+    cout << "fwList1.erase_after(fwListItr2): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.remove(4);
+    cout << "fwList1.remove(4): " << endl;
+    ShowFwListItems(fwList1);
+    fwList1.remove(7);
+    cout << "fwList1.remove(7): " << endl;
+    ShowFwListItems(fwList1);
+
+    forward_list<int> fwList2 = {1, 3, 5, 7, 9};
+    cout << "fwList1 = ";
+    ShowFwListItems(fwList1);
+    cout << "fwList2 = ";
+    ShowFwListItems(fwList2);
+
+    fwList1.swap(fwList2);
+    cout << "fwList1.swap(fwList2): " << endl;
+    cout << "fwList1 = ";
+    ShowFwListItems(fwList1);
+    cout << "fwList2 = ";
+    ShowFwListItems(fwList2);
+
+    fwList1.push_front(1);
+    cout << "fwList1.push_front(1): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.push_front(2);
+    cout << "fwList1.push_front(2): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.push_front(1);
+    cout << "fwList1.push_front(1): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.unique();  // remove duplicates **only works 100% for sorted forward list -> it removes an element only if it compares equal to the elment immediately preceding it.
+    cout << "fwList1.unique(): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.reverse();  // reverse isn't sorting in reverse (decreasing) order. it is reversing the order the elements appear in the forwrd list.
+    cout << "fwList1.reverse(): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.unique();  // still doens't work because the foward list is not sorted.
+    cout << "fwList1.unique(): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.sort();
+    cout << "fwList1.sort(): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList2.sort();
+    cout << "fwList2.sort(): " << endl;
+    ShowFwListItems(fwList2);
+
+    fwList1.merge(fwList2);  // result is sorted if the two forward lists are sorted.
+    cout << "fwList1.merge(fwList2): " << endl;
+    ShowFwListItems(fwList1);
+
+    fwList1.unique();  // now works 100%, after sorting.
+    cout << "fwList1.unique(): " << endl;
+    ShowFwListItems(fwList1);
+
+    printf("\n\n");
+
+    // Associative Containers -> store sorted data, allowing for fast search.
+    // set, multi-set, map
+    // Sets
+    cout << "---- SETS ----" << endl;
+    set<int> set1{10, 10, 8, 8, 6, 6, 1, 4, 1, 3, 3, 5, 7, 2, 3};
+
+    cout << "set1: " << endl;
+    ShowSetItems(set1);
+    cout << "set1.size() = " << set1.size() << endl;
+
+    set1.insert(11);
+    cout << "set1.insert(11): " << endl;
+    ShowSetItems(set1);
+
+    set1.erase(4);
+    cout << "set1.erase(4): " << endl;
+    ShowSetItems(set1);
+
+    set<int>::iterator setItr1 = set1.begin();
+    setItr1++;
+    cout << "setItr1 = set1.begin()" << endl;
+    cout << "setItr1++" << endl;
+    cout << "*setItr1 = " << *setItr1 << endl;
+
+    set<int>::iterator setItr2 = set1.end();
+    cout << "setItr2 = set1.end()" << endl;
+    cout << "*setItr2 = " << *setItr2 << endl;
+    advance(setItr2, -1);
+    cout << "advance(setItr2, -1)" << endl;
+    cout << "*setItr2 = " << *setItr2 << endl;
+    advance(setItr2, -2);
+    cout << "advance(setItr2, -2)" << endl;
+    cout << "*setItr2 = " << *setItr2 << endl;
 
     return 0;
 }
@@ -813,6 +1148,7 @@ int GetRandValue(int upperbound) {
 }
 
 void ExecuteThread(int id) {
+    // Time Functions
     auto currentTime = chrono::system_clock::now();
     time_t sleepTime = chrono::system_clock::to_time_t(currentTime);
     tm myLocalTime = *localtime(&sleepTime);
@@ -835,3 +1171,33 @@ void ExecuteThread(int id) {
     cout << "Awake Time: " << ctime(&awakeTime) << endl;
 }
 //
+
+template <typename T>
+void ShowArrItems(T* iterable) {
+    copy(iterable, (iterable + sizeof(&iterable) / sizeof(T) + 1), ostream_iterator<T>(cout, " "));
+    printf("\n");
+}
+
+template <typename T>
+void ShowDequeItems(deque<T> iterable) {
+    for (T x : iterable) cout << x << " ";
+    printf("\n");
+}
+
+template <typename T>
+void ShowListItems(list<T> iterable) {
+    for (T x : iterable) cout << x << " ";
+    printf("\n");
+}
+
+template <typename T>
+void ShowFwListItems(forward_list<T> iterable) {
+    for (T x : iterable) cout << x << " ";
+    printf("\n");
+};
+
+template <typename T>
+void ShowSetItems(set<T> iterable) {
+    for (T x : iterable) cout << x << " ";
+    printf("\n");
+};
