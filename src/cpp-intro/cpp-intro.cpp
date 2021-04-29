@@ -19,6 +19,9 @@
 #include <list>
 #include <forward_list>
 #include <set>
+#include <unordered_set>
+#include <map>
+#include <unordered_map>
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
@@ -58,16 +61,24 @@ template <typename T>
 T WhichIsBigger(T item1, T item2);
 int GetRandValue(int upperbound);
 void ExecuteThread(int id);
+template <typename T, size_t n>
+void ShowArrItems(T const (&arr)[n]);
 template <typename T>
-void ShowArrItems(T* iterable);
+void ShowDequeItems(deque<T> container);
 template <typename T>
-void ShowDequeItems(deque<T> iterable);
+void ShowListItems(list<T> container);
 template <typename T>
-void ShowListItems(list<T> iterable);
+void ShowFwListItems(forward_list<T> container);
 template <typename T>
-void ShowFwListItems(forward_list<T> iterable);
+void ShowSetItems(set<T> container);
 template <typename T>
-void ShowSetItems(set<T> iterable);
+void ShowUnorderedSetItems(unordered_set<T> container);
+template <typename T>
+void ShowMultiSetItems(multiset<T> container);
+template <typename T, typename U>
+void ShowMapItems(map<T, U> const& container);
+template <typename T, typename U>
+void ShowUnorderedMapItems(unordered_map<T, U> const& container);
 
 // ENTRY POINT //
 int main(int argc, char** argv) {
@@ -744,7 +755,7 @@ int main(int argc, char** argv) {
     ShowDequeItems(numsDeq);
 
     int tempArr1[3] = {7, 8, 9};
-    cout << "tempArr1: " << endl;
+    cout << "tempArr1 = ";
     ShowArrItems(tempArr1);
 
     numsDeq.insert(numsDeq.end(), tempArr1, tempArr1 + 2);
@@ -779,11 +790,11 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     // list
-    // this is like a doubly-linked list
+    // this is doubly-linked list
     // fast random access not supported.
     cout << "---- LIST ----" << endl;
     int numArr5[5] = {1, 2, 3, 4, 5};
-    cout << "numArr5: ";
+    cout << "numArr5 = ";
     ShowArrItems(numArr5);
     list<int> list1;
     list1.insert(list1.begin(), numArr5, numArr5 + 5);
@@ -913,7 +924,7 @@ int main(int argc, char** argv) {
     printf("\n\n");
 
     // forward_list
-    // this is like a singly-linked list
+    // this is singly-linked list
     // fast random access not supported.
     cout << "---- FORWARD_LIST ----" << endl;
     forward_list<int> fwList1;
@@ -1032,9 +1043,11 @@ int main(int argc, char** argv) {
 
     printf("\n\n");
 
-    // Associative Containers -> store sorted data, allowing for fast search.
+    // Associative Containers -> store data in pre-defined order, allowing for fast search.
     // set, multi-set, map
-    // Sets
+    // Sets -> #include <set>
+    // unordered_set incorporates hash function to weakly order the sequence.
+    // unordered_set requires separate #include <unordered_set>
     cout << "---- SETS ----" << endl;
     set<int> set1{10, 10, 8, 8, 6, 6, 1, 4, 1, 3, 3, 5, 7, 2, 3};
 
@@ -1065,6 +1078,117 @@ int main(int argc, char** argv) {
     advance(setItr2, -2);
     cout << "advance(setItr2, -2)" << endl;
     cout << "*setItr2 = " << *setItr2 << endl;
+
+    set<int>::iterator setItr3 = set1.find(5);
+    cout << "setItr3 = set1.find(5)" << endl;
+    cout << "*setItr3 = " << *setItr3 << endl;
+
+    set1.erase(setItr3, setItr2);
+    cout << "set1.erase(setItr3, setItr2): " << endl;
+    ShowSetItems(set1);
+
+    int numArr6[] = {2, 4, 6, 8};
+    cout << "numArr6 = ";
+    ShowArrItems(numArr6);
+    set<int> set2;
+    set2.insert(numArr6, numArr6 + 3);
+    cout << "set2.insert(numArr6, numArr6 + 3): " << endl;
+    ShowSetItems(set2);
+
+    set<int>::iterator setItr4 = set1.lower_bound(2);
+    cout << "setItr4 = set1.lower_bound(2)" << endl;
+    cout << "*setItr4 = " << *setItr4 << endl;
+    set<int>::iterator setItr5 = set1.upper_bound(2);
+    cout << "setItr5 = set1.upper_bound(2)" << endl;
+    cout << "*setItr5 = " << *setItr5 << endl;
+
+    cout << "set1 = ";
+    ShowSetItems(set1);
+    cout << "set2 = ";
+    ShowSetItems(set2);
+
+    set1.swap(set2);
+    cout << "set1.swap(set2): " << endl;
+    cout << "set1 = ";
+    ShowSetItems(set1);
+    cout << "set2 = ";
+    ShowSetItems(set2);
+
+    // unordered_set
+    unordered_set<int> uset1 = {3, 3, 1, 1, 5, 2, 4, 6, 7, 7, 9, 8, 9};
+    cout << "unordered_set" << endl;
+    cout << "uset1: " << endl;
+    ShowUnorderedSetItems(uset1);
+
+    printf("\n\n");
+
+    // Multisets -> included in <set>
+    // basically same as set, but allows duplicates
+    cout << "---- MULTISETS ----" << endl;
+    multiset<int> mset1{10, 10, 8, 8, 6, 6, 1, 4, 1, 3, 3, 5, 7, 2, 3};
+    cout << "mset1: " << endl;
+    ShowMultiSetItems(mset1);
+
+    printf("\n\n");
+
+    // Maps -> #include <map>
+    // key-value pairs
+    // map sorts the items by key. unordered_map incorporates hash function to weakly order the sequence.
+    // unordered_map requires separate #include <unordered_map>.
+    cout << "---- MAPS ----" << endl;
+    map<int, string> map1;
+    map1.insert(pair<int, string>(0, "zero"));
+    map1.insert(pair<int, string>(1, "one"));
+    map1.insert(pair<int, string>(2, "two"));
+    map1.insert(pair<int, string>(3, "three"));
+    map1.insert(pair<int, string>(4, "four"));
+    map1.insert(pair<int, string>(5, "five"));
+
+    cout << "map" << endl;
+    cout << "map1 = ";
+    ShowMapItems(map1);
+
+    map<string, string> map2 = {
+        {"A+", "100"},
+        {"A", "90~99"},
+        {"B", "80~89"},
+        {"C", "70~79"},
+        {"D", "60~69"},
+        {"F", "~59"}};
+
+    cout << "map" << endl;
+    cout << "map2 = ";
+    ShowMapItems(map2);
+
+    unordered_map<string, string> map3 = {
+        {"A+", "100"},
+        {"A", "90~99"},
+        {"B", "80~89"},
+        {"C", "70~79"},
+        {"D", "60~69"},
+        {"F", "~59"}};
+
+    cout << "unordered_map" << endl;
+    cout << "map3 = ";
+    ShowUnorderedMapItems(map3);
+
+    // in C++, key => "first" and value => "second".
+
+    cout << "map1 key 2 = map1.find(2)->first = " << map1.find(2)->first << endl;
+    cout << "map1 key 3 = map1.find(3)->first = " << map1.find(3)->first << endl;
+    cout << "map1 key 5 = map1.find(5)->first = " << map1.find(5)->first << endl;
+
+    auto match2 = map1.find(2);
+    cout << "map1[2] = map1.find(2)->second = " << map1.find(2)->second << endl;
+    auto match3 = map1.find(3);
+    cout << "map1[3] = map1.find(3)->second = " << match3->second << endl;
+    auto match5 = map1.find(5);
+    cout << "map1[5] = map1.find(5)->second = " << match5->second << endl;
+
+    cout << "map1.lower_bound(2)->first = " << map1.lower_bound(2)->first << endl;
+    cout << "map1.upper_bound(2)->first = " << map1.upper_bound(2)->first << endl;
+    cout << "map1.lower_bound(2)->second = " << map1.lower_bound(2)->second << endl;
+    cout << "map1.upper_bound(2)->second = " << map1.upper_bound(2)->second << endl;
 
     return 0;
 }
@@ -1172,32 +1296,64 @@ void ExecuteThread(int id) {
 }
 //
 
-template <typename T>
-void ShowArrItems(T* iterable) {
-    copy(iterable, (iterable + sizeof(&iterable) / sizeof(T) + 1), ostream_iterator<T>(cout, " "));
+template <typename T, size_t n>
+void ShowArrItems(T const (&arr)[n]) {
+    for (size_t i = 0; i < n; i++) {
+        cout << arr[i] << " ";
+    }
     printf("\n");
 }
 
 template <typename T>
-void ShowDequeItems(deque<T> iterable) {
-    for (T x : iterable) cout << x << " ";
+void ShowDequeItems(deque<T> container) {
+    for (T x : container) cout << x << " ";
     printf("\n");
 }
 
 template <typename T>
-void ShowListItems(list<T> iterable) {
-    for (T x : iterable) cout << x << " ";
+void ShowListItems(list<T> container) {
+    for (T x : container) cout << x << " ";
     printf("\n");
 }
 
 template <typename T>
-void ShowFwListItems(forward_list<T> iterable) {
-    for (T x : iterable) cout << x << " ";
+void ShowFwListItems(forward_list<T> container) {
+    for (T x : container) cout << x << " ";
     printf("\n");
 };
 
 template <typename T>
-void ShowSetItems(set<T> iterable) {
-    for (T x : iterable) cout << x << " ";
+void ShowSetItems(set<T> container) {
+    for (T x : container) cout << x << " ";
     printf("\n");
+};
+
+template <typename T>
+void ShowUnorderedSetItems(unordered_set<T> container) {
+    for (T x : container) cout << x << " ";
+    printf("\n");
+};
+
+template <typename T>
+void ShowMultiSetItems(multiset<T> container) {
+    for (T x : container) cout << x << " ";
+    printf("\n");
+};
+
+template <typename T, typename U>
+void ShowMapItems(map<T, U> const& container) {
+    cout << "{" << endl;
+    for (auto const& pair : container) {
+        cout << "  " << pair.first << " : " << pair.second << "," << endl;
+    }
+    cout << "}" << endl;
+};
+
+template <typename T, typename U>
+void ShowUnorderedMapItems(unordered_map<T, U> const& container) {
+    cout << "{" << endl;
+    for (auto const& pair : container) {
+        cout << "  " << pair.first << " : " << pair.second << "," << endl;
+    }
+    cout << "}" << endl;
 };
