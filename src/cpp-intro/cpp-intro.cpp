@@ -1307,6 +1307,23 @@ int main(int argc, char** argv) {
 
     printf("\n\n");
 
+    // Enums -> used to create custom data types by assigning names to constant integers
+    enum day { Mon = 1,
+               Tue,
+               Wed,
+               Thu,
+               Fri,
+               Sat,
+               Sun };
+    enum day tuesday = Tue;
+    cout << "enum day { Mon = 1, Tue, Wed, Thu, Fri, Sat, Sun }" << endl;
+    cout << "Tuesday is day " << tuesday << " of the week" << endl;
+    cout << "Saturday is day " << Sat << " of the week" << endl;
+
+    for (int weekdayNum = Mon; weekdayNum <= Sun; weekdayNum++) {
+        cout << "Weekday " << weekdayNum << endl;
+    }
+
     return 0;
 }
 
