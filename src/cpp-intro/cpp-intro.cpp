@@ -22,6 +22,8 @@
 #include <unordered_set>
 #include <map>
 #include <unordered_map>
+#include <stack>
+#include <queue>
 
 #include "../cpp-classes/Shape.h"
 #include "../cpp-classes/Circle.h"
@@ -1189,6 +1191,121 @@ int main(int argc, char** argv) {
     cout << "map1.upper_bound(2)->first = " << map1.upper_bound(2)->first << endl;
     cout << "map1.lower_bound(2)->second = " << map1.lower_bound(2)->second << endl;
     cout << "map1.upper_bound(2)->second = " << map1.upper_bound(2)->second << endl;
+
+    printf("\n\n");
+
+    // Container Adapters
+    // stack, queue, priority_queue
+    // Stacks -> #include <stack>
+    cout << "---- STACKS ----" << endl;
+    stack<string> plates;
+    plates.push("plate1");
+    cout << "plates.push(\"plate1\")" << endl;
+    cout << "plates.top() = " << plates.top() << endl;
+    plates.push("plate2");
+    cout << "plates.push(\"plate2\")" << endl;
+    cout << "plates.top() = " << plates.top() << endl;
+    plates.push("plate3");
+    cout << "plates.push(\"plate3\")" << endl;
+    cout << "plates.top() = " << plates.top() << endl;
+    plates.push("plate4");
+    cout << "plates.push(\"plate4\")" << endl;
+    cout << "plates.top() = " << plates.top() << endl;
+    plates.push("plate5");
+    cout << "plates.push(\"plate5\")" << endl;
+    cout << "plates.top() = " << plates.top() << endl;
+    plates.pop();
+    cout << "plates.pop()" << endl;
+    cout << "plates.top() = " << plates.top() << endl;
+    plates.pop();
+    cout << "plates.pop()" << endl;
+    cout << "plates.top() = " << plates.top() << endl;
+
+    if (!plates.empty()) {
+        while (plates.size()) {
+            cout << "plates.size() = " << plates.size() << endl;
+            cout << "plates.top() = " << plates.top() << endl;
+            plates.pop();
+            cout << "plates.pop()" << endl;
+        }
+        cout << "plates empty!" << endl;
+    }
+
+    printf("\n\n");
+
+    // Queues -> #include <queue>
+    cout << "---- QUEUES ----" << endl;
+    queue<string> ticketLine;
+    ticketLine.push("person1");
+    cout << "ticketLine.push(\"person1\")" << endl;
+    cout << "ticketLine.front() = " << ticketLine.front() << endl;
+    ticketLine.push("person2");
+    cout << "ticketLine.push(\"person2\")" << endl;
+    cout << "ticketLine.front() = " << ticketLine.front() << endl;
+    ticketLine.push("person3");
+    cout << "ticketLine.push(\"person3\")" << endl;
+    cout << "ticketLine.front() = " << ticketLine.front() << endl;
+    ticketLine.push("person4");
+    cout << "ticketLine.push(\"person4\")" << endl;
+    cout << "ticketLine.front() = " << ticketLine.front() << endl;
+    ticketLine.push("person5");
+    cout << "ticketLine.push(\"person5\")" << endl;
+    cout << "ticketLine.front() = " << ticketLine.front() << endl;
+    ticketLine.pop();
+    cout << "ticketLine.pop()" << endl;
+    cout << "ticketLine.front() = " << ticketLine.front() << endl;
+    ticketLine.pop();
+    cout << "ticketLine.pop()" << endl;
+    cout << "ticketLine.front() = " << ticketLine.front() << endl;
+
+    if (!ticketLine.empty()) {
+        while (ticketLine.size()) {
+            cout << "ticketLine.size() = " << ticketLine.size() << endl;
+            cout << "ticketLine.front() = " << ticketLine.front() << endl;
+            ticketLine.pop();
+            cout << "ticketLine.pop()" << endl;
+        }
+        cout << "ticketLine empty!" << endl;
+    }
+
+    printf("\n\n");
+
+    // Priority Queues -> #included in <queue>
+    cout << "---- PRIORITY QUEUES ----" << endl;
+    priority_queue<int> entranceLine;
+    entranceLine.push(5);
+    cout << "entranceLine.push(5)" << endl;
+    cout << "entranceLine.top() = " << entranceLine.top() << endl;
+    entranceLine.push(1);
+    cout << "entranceLine.push(1)" << endl;
+    cout << "entranceLine.top() = " << entranceLine.top() << endl;
+    entranceLine.push(3);
+    cout << "entranceLine.push(3)" << endl;
+    cout << "entranceLine.top() = " << entranceLine.top() << endl;
+    entranceLine.push(10);
+    cout << "entranceLine.push(10)" << endl;
+    cout << "entranceLine.top() = " << entranceLine.top() << endl;
+    entranceLine.push(6);
+    cout << "entranceLine.push(6)" << endl;
+    cout << "entranceLine.top() = " << entranceLine.top() << endl;
+    entranceLine.pop();
+    cout << "entranceLine.pop()" << endl;
+    cout << "entranceLine.top() = " << entranceLine.top() << endl;
+    entranceLine.pop();
+    cout << "entranceLine.pop()" << endl;
+    cout << "entranceLine.top() = " << entranceLine.top() << endl;
+
+    if (!entranceLine.empty()) {
+        while (entranceLine.size()) {
+            cout << "entranceLine.size() = " << entranceLine.size() << endl;
+            cout << "entranceLine.top() = " << entranceLine.top() << endl;
+            entranceLine.pop();
+            cout << "entranceLine.pop()" << endl;
+        }
+        cout << "entranceLine empty!" << endl;
+    }
+
+    printf("\n\n");
 
     return 0;
 }
